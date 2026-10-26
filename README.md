@@ -1,4 +1,4 @@
-# HydroRush— 2D Bullet Hell
+# HydroRush— 2D Bullet Hell - Extended
 
 ## Description
 HydroRush is a 2D top-down bullet hell game about water pollution. The player controls a living water droplet, avoids toxic projectiles, fights garbage enemies, and uses water-based abilities.
