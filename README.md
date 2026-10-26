@@ -28,3 +28,24 @@ The objective is to dodge toxic projectiles, confront enemies linked to trash, a
 
 ## Status
 Prototype in development. Features and controls must be tested in Unity before the project is considered complete.
+
+## Environmental Message
+HydroRush aims to raise awareness about water pollution through gameplay. By representing pollution as enemies and toxic projectiles, the game encourages players to reflect on the impact of waste on aquatic ecosystems. Thel player, embodied as a living droplet, symbolizes the importance of protecting and restoring natural water resources. 
+
+## Main Features
+
+- Fast-paced 2D bullet hell gameplay.
+- Top-down player movement and aiming system.
+- Purifying Wave special ability.
+- Enemies inspired by different forms of pollution.
+- Original soundtrack with aquatic-inspired themes.
+- Pixel-art visual style.
+
+## Installation
+
+1. Clone the repository: git clone https://github.com/KairosNova/HydroRush.git
+2. Open the project using Unity Hub.
+3. Select the project folder.
+4. Open the main scene inside the Assets folder.
+5. Press Play in the Unity Editor. 
+
