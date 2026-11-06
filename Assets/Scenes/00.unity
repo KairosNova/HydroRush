@@ -498,6 +498,11 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!4 &418292245 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4467058552474920818, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
+  m_PrefabInstance: {fileID: 4719125095602724214}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &430633124
 GameObject:
   m_ObjectHideFlags: 0
@@ -3469,7 +3474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89191b0c7f9e084f9e7998e28073045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlimeAttacker
-  target: {fileID: 0}
+  target: {fileID: 418292245}
   attackRange: 10
   projectilePrefab: {fileID: 3057041430053960175, guid: cbcbb820e67a7d24695d256ba7f88190, type: 3}
   timeBetweenBursts: 2.5
@@ -3605,6 +3610,17 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &803724272 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2766904325159943821, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
+  m_PrefabInstance: {fileID: 76708630729580673}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &835628267
 GameObject:
   m_ObjectHideFlags: 0
@@ -3696,6 +3712,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1117452978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8605522929364726525, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
+  m_PrefabInstance: {fileID: 76708630729580673}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1224034262
 GameObject:
   m_ObjectHideFlags: 0
@@ -3969,6 +3996,25 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1576746196 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6015336398041136214, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
+  m_PrefabInstance: {fileID: 76708630729580673}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1576746199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576746196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e3cc3d1db98754a83179aa89d18e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LifebarUI
+  healthBar: {fileID: 803724272}
+  healthValueText: {fileID: 1117452978}
 --- !u!1 &1653515506
 GameObject:
   m_ObjectHideFlags: 0
@@ -4592,7 +4638,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6015336398041136214, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1576746199}
   m_SourcePrefab: {fileID: 100100000, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
 --- !u!1001 &4719125095602724214
 PrefabInstance:
@@ -4602,6 +4651,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2009604297065414063, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
+      propertyPath: currentHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4467058552474920818, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4642,6 +4695,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8439047845953931576, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
+      propertyPath: shootSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4310474905e266640852f43bd609a1a4, type: 3}
     - target: {fileID: 8867421842188882158, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
       propertyPath: m_Name
       value: Aqua
