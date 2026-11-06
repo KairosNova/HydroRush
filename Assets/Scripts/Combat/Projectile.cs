@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed = 12f;
     [SerializeField] private float lifetime = 3f;
+    [SerializeField] private int damage = 10;
 
     [Tooltip("If true, touching Aqua makes her play the hit reaction and the shot disappears.")]
     [SerializeField] private bool hurtsPlayer;
@@ -53,10 +54,10 @@ public class Projectile : MonoBehaviour
         // Enemy shots react with Aqua; her own shots ignore her
         if (hurtsPlayer)
         {
-            PlayerController player = other.GetComponent<PlayerController>();
-            if (player != null)
+            PlayerHealth health = other.GetComponent<PlayerHealth>();
+            if (health != null)
             {
-                player.TakeHit();
+                health.TakeDamage(damage);
                 Destroy(gameObject);
             }
         }

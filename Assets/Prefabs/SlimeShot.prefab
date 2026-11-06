@@ -135,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   speed: 4
   lifetime: 6
+  damage: 29
   hurtsPlayer: 1
   rotateToDirection: 0
 --- !u!58 &4230566028577651370
