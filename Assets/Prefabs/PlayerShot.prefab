@@ -135,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   speed: 14
   lifetime: 2
+  damage: 10
   hurtsPlayer: 0
   rotateToDirection: 1
 --- !u!58 &6843171063720442406
@@ -171,5 +172,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.0595
+  m_Offset: {x: 0, y: -0.01616207}
+  m_Radius: 0.07566208
