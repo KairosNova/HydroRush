@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private Camera mainCamera;
     private InputAction moveAction;
     private InputAction attackAction;
+    private PlayerHealth health;
 
     private Vector2 moveInput;
     private Vector2 aimDirection = Vector2.up;
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        health = GetComponent<PlayerHealth>();
     }
 
     private void OnEnable()
