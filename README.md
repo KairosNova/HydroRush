@@ -47,5 +47,12 @@ HydroRush aims to raise awareness about water pollution through gameplay. By rep
 2. Open the project using Unity Hub.
 3. Select the project folder.
 4. Open the main scene inside the Assets folder.
-5. Press Play in the Unity Editor. 
+5. Press Play in the Unity Editor.
+
+## Credits and licenses
+ UI
+- **Complete UI Essential Pack (Free)** by [Crusenho Agus Hennihuno](https://crusenho.itch.io),
+  licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+  Changes: only part of the sprites are used (list here any recolor, scaling or edits you make).
+  License file: [License.txt](Assets/Art/Complete_UI_Essential_Pack_Free/Complete_UI_Essential_Pack_Free/License.txt)
 
