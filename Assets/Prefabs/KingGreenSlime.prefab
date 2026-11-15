@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8262520289906140580}
   - component: {fileID: 8038534881063053359}
   - component: {fileID: 8955078321088735576}
+  - component: {fileID: 7670111093664400617}
   m_Layer: 0
   m_Name: KingGreenSlime
   m_TagString: Enemy
@@ -151,3 +152,26 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.007663518, y: 0.3662635}
   m_Radius: 0.37542605
+--- !u!114 &7670111093664400617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6086475201392984252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89191b0c7f9e084f9e7998e28073045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlimeAttacker
+  target: {fileID: 4467058552474920818, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
+  attackRange: 10
+  projectilePrefab: {fileID: 3057041430053960175, guid: cbcbb820e67a7d24695d256ba7f88190, type: 3}
+  timeBetweenBursts: 2.5
+  bulletsPerBurst: 12
+  timeBetweenBullets: 0.07
+  spiralStepDegrees: 25
+  muzzleOffset: {x: 0, y: 0.35}
+  windUpTime: 0.35
+  bubbleSpeed: 4
+  bubbleDamage: 10

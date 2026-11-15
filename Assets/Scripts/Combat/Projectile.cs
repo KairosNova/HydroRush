@@ -7,11 +7,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
 {
+    [Tooltip("Default speed. A shooter can override it when it calls Launch (see SlimeAttacker).")]
     [SerializeField] private float speed = 12f;
     [SerializeField] private float lifetime = 3f;
+    [Tooltip("Default damage to Aqua. A shooter can override it when it calls Launch (see SlimeAttacker).")]
     [SerializeField] private int damage = 10;
 
-    [Tooltip("If true, touching Aqua makes her play the hit reaction and the shot disappears.")]
+    [Tooltip("If true, this shot damages Aqua when it touches her and then disappears.")]
     [SerializeField] private bool hurtsPlayer;
 
     [Tooltip("Rotate the sprite so its top points where the shot is travelling.")]
@@ -30,9 +32,21 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
-    /// <summary>Sets the flight direction and starts moving. Call it right after Instantiate.</summary>
+    /// <summary>Launches the shot with the prefab's default speed and damage.</summary>
     public void Launch(Vector2 direction)
     {
+        Launch(direction, speed, damage);
+    }
+
+    /// <summary>
+    /// Launches the shot with the shooter's own speed and damage, so one prefab can serve several enemies.
+    /// Call it right after Instantiate.
+    /// </summary>
+    public void Launch(Vector2 direction, float launchSpeed, int launchDamage)
+    {
+        speed = launchSpeed;
+        damage = launchDamage;
+
         Vector2 normalized = direction.normalized;
         body.linearVelocity = normalized * speed;
 

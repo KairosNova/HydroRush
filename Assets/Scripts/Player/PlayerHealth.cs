@@ -14,6 +14,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float currentHealth;
     [Tooltip("Seconds without taking damage after a hit, so one burst of bullets does not drain the bar at once.")]
     [SerializeField] private float invulnerabilityTime = 0.5f;
+    [Tooltip("Seconds between dying and disappearing. The Die animation lasts about 0.63 s.")]
+    [SerializeField] private float disappearDelay = 1f;
 
     private bool isInvulnerable;
     private float invulnerableUntil;
@@ -57,7 +59,6 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log(gameObject.name + " took " + damage + " damage. HP: " + currentHealth + "/" + maxHealth);
 
         onHealthPercentageChanged?.Invoke(HealthPercent);   // update the life bar
-        onDamage?.Invoke();                                 // hit animation, sound, etc.
 
         if (IsDead)
         {
@@ -76,7 +77,8 @@ public class PlayerHealth : MonoBehaviour
     {
         //logic for the dead of the player
         Debug.Log(gameObject.name + " died");
-        onDeath?.Invoke();
+        onDeath?.Invoke();                       // plays the Die animation (PlayerController.PlayDeathAnimation)
+        Destroy(gameObject, disappearDelay);     // disappears once the animation has finished
 
     }
 

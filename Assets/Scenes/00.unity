@@ -3483,6 +3483,8 @@ MonoBehaviour:
   spiralStepDegrees: 25
   muzzleOffset: {x: 0, y: 0.35}
   windUpTime: 0.35
+  bubbleSpeed: 4
+  bubbleDamage: 10
 --- !u!1 &773879799
 GameObject:
   m_ObjectHideFlags: 0
@@ -4655,6 +4657,14 @@ PrefabInstance:
       propertyPath: currentHealth
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 4387402617229287288, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.185
+      objectReference: {fileID: 0}
+    - target: {fileID: 4387402617229287288, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.13
+      objectReference: {fileID: 0}
     - target: {fileID: 4467058552474920818, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4694,6 +4704,10 @@ PrefabInstance:
     - target: {fileID: 4467058552474920818, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067367033471746400, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.59
       objectReference: {fileID: 0}
     - target: {fileID: 8439047845953931576, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
       propertyPath: shootSound
