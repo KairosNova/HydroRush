@@ -219,6 +219,7 @@ MonoBehaviour:
   loseRange: 12
   moveSpeed: 1.5
   stopDistance: 1
+  debugLog: 1
 --- !u!114 &-445298029550734987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,9 +232,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89191b0c7f9e084f9e7998e28073045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlimeAttacker
-  target: {fileID: 0}
+  target: {fileID: 4467058552474920818, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
   attackRange: 10
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 3057041430053960175, guid: cbcbb820e67a7d24695d256ba7f88190, type: 3}
   timeBetweenBursts: 2.5
   bulletsPerBurst: 12
   timeBetweenBullets: 0.07

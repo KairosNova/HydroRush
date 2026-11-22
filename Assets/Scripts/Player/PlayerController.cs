@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
         UpdateAimDirection();
         RotateAimPivot();
 
-        if (attackAction.IsPressed() && Time.time >= nextShotTime)
+        if ((attackAction.IsPressed() || AccessibilitySettings.AutoFire) && Time.time >= nextShotTime)
         {
             Shoot();
         }

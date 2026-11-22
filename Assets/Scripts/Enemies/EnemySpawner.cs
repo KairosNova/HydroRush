@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class EnemySpawner : MonoBehaviour
     private float slimeInterval = 1.5f;// seconds between each slime
     [SerializeField]
     private int slimesToKill = 10;// how many slimes appear (and must be killed) before the big slime
+    [SerializeField]
+    private TextMeshProUGUI remainingText;// the UI text that shows how many slimes are left
+
+    private int slimesLeftToSpawn;// slimes of the wave that have not appeared yet
+    private int lastShown = -1;// last number written, so the text is only updated when it changes
 
     // NOTE: the room is 20 x 12, so the walls are at X = ±10 and Y = ±6.
     // These limits are smaller on purpose, so no slime appears on or outside the walls.
@@ -25,6 +31,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        slimesLeftToSpawn = slimesToKill;// at the beginning, all of them are still missing
         StartCoroutine(SpawnWave());
     }
 
@@ -37,6 +44,7 @@ public class EnemySpawner : MonoBehaviour
             GameObject newSlime = Instantiate(slimePrefab, position, Quaternion.identity);
 
             slimes.Add(newSlime.GetComponent<EnemyHealth>());// save it to check later if it died
+            slimesLeftToSpawn--;// one less waiting to appear
 
             yield return new WaitForSeconds(slimeInterval);// wait before the next one
         }
@@ -51,16 +59,33 @@ public class EnemySpawner : MonoBehaviour
         Instantiate(bigSlimePrefab, Vector3.zero, Quaternion.identity);
     }
 
-    private bool AnySlimeAlive()
+    private void Update()
     {
+        // remaining = slimes that have not appeared yet + the spawned ones that are still alive
+        int remaining = slimesLeftToSpawn + CountAlive();
+        if (remaining != lastShown && remainingText != null)
+        {
+            lastShown = remaining;
+            remainingText.text = "Slimes restantes: " + remaining;
+        }
+    }
+    private int CountAlive()
+    {
+        int count = 0;
         foreach (EnemyHealth slime in slimes)
         {
-            // a slime counts as alive only if it still exists and is not dead
+            // a slime counts only if it still exists and is not dead
             if (slime != null && !slime.IsDead)
             {
-                return true;
+                count++;
             }
         }
-        return false;
+        return count;
+    }
+
+
+    private bool AnySlimeAlive()
+    {
+        return CountAlive() > 0;
     }
 }
