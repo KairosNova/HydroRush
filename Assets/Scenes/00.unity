@@ -4193,6 +4193,56 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1958230781
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1958230783}
+  - component: {fileID: 1958230782}
+  m_Layer: 0
+  m_Name: EnemySpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1958230782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958230781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637c20fe5a4d1da4c84ee47b798eb139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  slimePrefab: {fileID: 6974227291392792355, guid: 8310c8afd57c26c40a2a04c6a4add188, type: 3}
+  bigSlimePrefab: {fileID: 6086475201392984252, guid: 36581c0d3a2af3e479be890dfa6d8ae2, type: 3}
+  slimeInterval: 3
+  slimesToKill: 10
+  limitX: 8
+  limitY: 4.5
+--- !u!4 &1958230783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958230781}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 365.9856, y: 520.96423, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1996024960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4613,6 +4663,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8133371488384446683, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
+      propertyPath: m_text
+      value: 'Mapa
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 8774513086411138794, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4638,7 +4694,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4784220319918891892, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
+    - {fileID: 8522787259659428709, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
+    - {fileID: 3734244960510344220, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6015336398041136214, guid: 4fb368e827ea1ef4581f4783b60c0244, type: 3}
@@ -4793,3 +4852,4 @@ SceneRoots:
   - {fileID: 592756413}
   - {fileID: 63563129}
   - {fileID: 1899053402}
+  - {fileID: 1958230783}

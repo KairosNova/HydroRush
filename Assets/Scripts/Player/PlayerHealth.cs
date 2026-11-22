@@ -28,6 +28,13 @@ public class PlayerHealth : MonoBehaviour
     public bool IsDead => currentHealth <= 0f;
     public float HealthPercent => currentHealth / maxHealth; // logic to detect the percentage of the life for the UI
 
+    /// <summary>True while Aqua cannot be hurt: during a dash, or in the short pause after a hit.</summary>
+    // NOTE: Projectile reads this, so enemy bullets fly through Aqua instead of disappearing while she is invulnerable.
+    public bool IsInvulnerable
+    {
+        get { return isInvulnerable || Time.time < invulnerableUntil; }
+    }
+
     private void Awake()
     {
         currentHealth = maxHealth;
@@ -45,6 +52,18 @@ public class PlayerHealth : MonoBehaviour
     public void SetInvulnerable(bool invulnerable)
     {
         isInvulnerable = invulnerable;
+    }
+
+    /// <summary>Restores health (used by the Purifying Wave). It never goes above the maximum.</summary>
+    public void Heal(float amount)
+    {
+        if (IsDead)
+        {
+            return;   // a dead Aqua cannot be healed
+        }
+
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        onHealthPercentageChanged?.Invoke(HealthPercent);   // update the life bar
     }
 
     public virtual void TakeDamage(int damage)

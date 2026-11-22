@@ -351,12 +351,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 6
   projectilePrefab: {fileID: 5652989104652889995, guid: 5e785c2336ef54c42bc019c2afd0238b, type: 3}
-  shotsPerSecond: 6
+  shotsPerSecond: 3
   muzzleDistance: 0.5
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 4310474905e266640852f43bd609a1a4, type: 3}
   muzzlePoint: {fileID: 7033169720004487795}
   aimPivot: {fileID: 4359007063083595000}
   aimAngleOffset: 0
+  dashSpeed: 14
+  dashDuration: 0.18
+  dashCooldown: 0.8
 --- !u!114 &2009604297065414063
 MonoBehaviour:
   m_ObjectHideFlags: 0

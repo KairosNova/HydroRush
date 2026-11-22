@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 8038534881063053359}
   - component: {fileID: 8955078321088735576}
   - component: {fileID: 7670111093664400617}
+  - component: {fileID: -2193796532131465734}
+  - component: {fileID: 718927576260960696}
+  - component: {fileID: -1910253837566203087}
   m_Layer: 0
   m_Name: KingGreenSlime
   m_TagString: Enemy
@@ -167,11 +170,76 @@ MonoBehaviour:
   target: {fileID: 4467058552474920818, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
   attackRange: 10
   projectilePrefab: {fileID: 3057041430053960175, guid: cbcbb820e67a7d24695d256ba7f88190, type: 3}
-  timeBetweenBursts: 2.5
-  bulletsPerBurst: 12
+  timeBetweenBursts: 1.5
+  bulletsPerBurst: 15
   timeBetweenBullets: 0.07
   spiralStepDegrees: 25
   muzzleOffset: {x: 0, y: 0.35}
   windUpTime: 0.35
-  bubbleSpeed: 4
-  bubbleDamage: 10
+  bubbleSpeed: 8
+  bubbleDamage: 20
+--- !u!50 &-2193796532131465734
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6086475201392984252}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &718927576260960696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6086475201392984252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b0eb6ab9aa5e9640a00565805e021b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100
+  disappearDelay: 0.8
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-1910253837566203087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6086475201392984252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2c6f251d199564980ff88b3b1d68e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyChase
+  target: {fileID: 4467058552474920818, guid: c4c8da2746c288b45b493608b0c41e2c, type: 3}
+  detectionRange: 8
+  loseRange: 12
+  moveSpeed: 1.5
+  stopDistance: 2
+  debugLog: 1

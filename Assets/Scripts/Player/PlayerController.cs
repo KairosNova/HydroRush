@@ -28,9 +28,24 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Rotation offset so the weapon's tip lines up with the aim: -90 if the sprite points up, 0 if it points right.")]
     [SerializeField] private float aimAngleOffset = -90f;
 
+    [Header("Dash")] // added with claude help
+    [Tooltip("Dash speed in units per second.")]
+    [SerializeField] private float dashSpeed = 14f;
+    [SerializeField] private float dashDuration = 0.18f;
+    [SerializeField] private float dashCooldown = 0.8f;
+
+
+
+
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
     private static readonly int HitHash = Animator.StringToHash("Hit");
     private static readonly int DieHash = Animator.StringToHash("Die");
+    private InputAction dashAction;
+    private bool isDashing;
+    private float dashEndTime;
+    private float nextDashTime;
+    private Vector2 dashDirection;
+
 
     private Rigidbody2D body;
     private Animator animator;
@@ -61,6 +76,13 @@ public class PlayerController : MonoBehaviour
         // Look the actions up by "Map/Action" name so they can be rebound later without touching this code
         moveAction = InputSystem.actions.FindAction("Player/Move");
         attackAction = InputSystem.actions.FindAction("Player/Attack");
+        // NOTE: Player/Dash lives in Assets/InputSystem_Actions.inputactions (Left Shift, Space, gamepad East button).
+        // Without this lookup dashAction stays null and the dash never starts.
+        dashAction = InputSystem.actions.FindAction("Player/Dash");
+        if (dashAction == null)
+        {
+            Debug.LogWarning("PlayerController: the Player/Dash action was not found, the dash is disabled.");
+        }
 
         if (moveAction == null || attackAction == null)
         {
@@ -85,6 +107,14 @@ public class PlayerController : MonoBehaviour
 
         // Read input every frame; apply it to the physics body in FixedUpdate
         moveInput = Vector2.ClampMagnitude(moveAction.ReadValue<Vector2>(), 1f);
+        if (dashAction != null && dashAction.WasPressedThisFrame() && !isDashing && Time.time >= nextDashTime)
+        {
+            StartDash();
+        }if (isDashing && Time.time >= dashEndTime)
+        {
+            EndDash();
+        }
+
 
         UpdateAimDirection();
         RotateAimPivot();
@@ -102,8 +132,31 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        body.linearVelocity = moveInput * moveSpeed;
+        // While dashing, the dash overrides the normal movement
+        body.linearVelocity = isDashing ? dashDirection * dashSpeed : moveInput * moveSpeed;
     }
+
+    private void StartDash()
+    {
+        // Dash where Aqua is moving; if she stands still, dash towards the aim direction
+        dashDirection = moveInput.sqrMagnitude > 0.01f ? moveInput.normalized : aimDirection;
+        isDashing = true;
+        dashEndTime = Time.time + dashDuration;
+        nextDashTime = Time.time + dashCooldown;   // the cooldown counts from the start of the dash
+        if (health != null)
+        {
+            health.SetInvulnerable(true); // an invulneravility for the dash 
+        }
+    }
+    private void EndDash()
+    {
+        isDashing = false;
+        if (health != null)
+        {
+            health.SetInvulnerable(false);// ends the dash invulneravility
+        }
+    }
+
 
     /// <summary>Plays the hit animation. Connected to PlayerHealth's On Damage event.</summary>
     public void TakeHit()

@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// A straight-flying shot, used both by Aqua (water drops) and by enemies (toxic bubbles).
-/// It disappears when its lifetime ends or when it touches a wall.
+/// It disappears when its lifetime ends or when it touches a wall or a target.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
@@ -13,13 +13,22 @@ public class Projectile : MonoBehaviour
     [Tooltip("Default damage to Aqua. A shooter can override it when it calls Launch (see SlimeAttacker).")]
     [SerializeField] private int damage = 10;
 
-    [Tooltip("If true, this shot damages Aqua when it touches her and then disappears.")]
+    [Tooltip("If true, this shot damages Aqua. If false, it damages enemies (these are Aqua's own shots).")]
     [SerializeField] private bool hurtsPlayer;
 
     [Tooltip("Rotate the sprite so its top points where the shot is travelling.")]
     [SerializeField] private bool rotateToDirection = true;
 
     private Rigidbody2D body;
+
+    // NOTE: read by other scripts (graze, purifying wave) to tell enemy shots from Aqua's shots.
+    public bool HurtsPlayer
+    {
+        get { return hurtsPlayer; }
+    }
+
+    // NOTE: set by GrazeZone the first time this bullet passes close to Aqua, so each bullet only gives charge once.
+    public bool HasGrazed { get; set; }
 
     private void Awake()
     {
@@ -65,13 +74,24 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        // Enemy shots react with Aqua; her own shots ignore her
         if (hurtsPlayer)
         {
+            // Enemy shots damage Aqua. While she is invulnerable (dash) they fly THROUGH her and keep going.
             PlayerHealth health = other.GetComponent<PlayerHealth>();
-            if (health != null)
+            if (health != null && !health.IsInvulnerable)
             {
                 health.TakeDamage(damage);
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            // Aqua's shots damage enemies.
+            // NOTE: the collider that is hit must be on the same object as the EnemyHealth component (the slime root).
+            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
                 Destroy(gameObject);
             }
         }
