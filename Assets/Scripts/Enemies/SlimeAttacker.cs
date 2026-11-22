@@ -26,6 +26,12 @@ public class SlimeAttacker : MonoBehaviour
     [Tooltip("Delay between the start of the attack animation and the first bubble.")]
     [SerializeField] private float windUpTime = 0.35f;
 
+    [Header("Bubble stats ")]
+    [Tooltip("How fast the bubbles fly. Green slime: 4. Use a higher value for tougher enemies.")]
+    [SerializeField] private float bubbleSpeed = 4f;
+    [Tooltip("Damage each bubble deals to Aqua. Green slime: 10. Use a higher value for tougher enemies.")]
+    [SerializeField] private int bubbleDamage = 10;
+
     private static readonly int AttackHash = Animator.StringToHash("Attack");
     private static readonly int FacingUpHash = Animator.StringToHash("FacingUp");
 
@@ -97,6 +103,6 @@ public class SlimeAttacker : MonoBehaviour
 
         Vector2 spawnPosition = (Vector2)transform.position + muzzleOffset;
         Projectile bubble = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
-        bubble.Launch(direction);
+        bubble.Launch(direction, bubbleSpeed, bubbleDamage);
     }
 }

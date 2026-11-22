@@ -19,15 +19,40 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float muzzleDistance = 0.6f;
     [Tooltip("Optional sound played on every shot (played through the AudioManager).")]
     [SerializeField] private AudioClip shootSound;
+    [Tooltip("Empty object at the tip of the water gun. Shots spawn here; if empty, Muzzle Distance is used instead.")]
+    [SerializeField] private Transform muzzlePoint;
+
+    [Header("Aim guide")]
+    [Tooltip("Empty child of Aqua that rotates towards the aim direction. The water gun is its child.")]
+    [SerializeField] private Transform aimPivot;
+    [Tooltip("Rotation offset so the weapon's tip lines up with the aim: -90 if the sprite points up, 0 if it points right.")]
+    [SerializeField] private float aimAngleOffset = -90f;
+
+    [Header("Dash")] // added with claude help
+    [Tooltip("Dash speed in units per second.")]
+    [SerializeField] private float dashSpeed = 14f;
+    [SerializeField] private float dashDuration = 0.18f;
+    [SerializeField] private float dashCooldown = 0.8f;
+
+
+
 
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
     private static readonly int HitHash = Animator.StringToHash("Hit");
+    private static readonly int DieHash = Animator.StringToHash("Die");
+    private InputAction dashAction;
+    private bool isDashing;
+    private float dashEndTime;
+    private float nextDashTime;
+    private Vector2 dashDirection;
+
 
     private Rigidbody2D body;
     private Animator animator;
     private Camera mainCamera;
     private InputAction moveAction;
     private InputAction attackAction;
+    private PlayerHealth health;
 
     private Vector2 moveInput;
     private Vector2 aimDirection = Vector2.up;
@@ -43,6 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        health = GetComponent<PlayerHealth>();
     }
 
     private void OnEnable()
@@ -50,6 +76,13 @@ public class PlayerController : MonoBehaviour
         // Look the actions up by "Map/Action" name so they can be rebound later without touching this code
         moveAction = InputSystem.actions.FindAction("Player/Move");
         attackAction = InputSystem.actions.FindAction("Player/Attack");
+        // NOTE: Player/Dash lives in Assets/InputSystem_Actions.inputactions (Left Shift, Space, gamepad East button).
+        // Without this lookup dashAction stays null and the dash never starts.
+        dashAction = InputSystem.actions.FindAction("Player/Dash");
+        if (dashAction == null)
+        {
+            Debug.LogWarning("PlayerController: the Player/Dash action was not found, the dash is disabled.");
+        }
 
         if (moveAction == null || attackAction == null)
         {
@@ -65,12 +98,28 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // A dead Aqua cannot move, aim or shoot
+        if (health != null && health.IsDead)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
+
         // Read input every frame; apply it to the physics body in FixedUpdate
         moveInput = Vector2.ClampMagnitude(moveAction.ReadValue<Vector2>(), 1f);
+        if (dashAction != null && dashAction.WasPressedThisFrame() && !isDashing && Time.time >= nextDashTime)
+        {
+            StartDash();
+        }if (isDashing && Time.time >= dashEndTime)
+        {
+            EndDash();
+        }
+
 
         UpdateAimDirection();
+        RotateAimPivot();
 
-        if (attackAction.IsPressed() && Time.time >= nextShotTime)
+        if ((attackAction.IsPressed() || AccessibilitySettings.AutoFire) && Time.time >= nextShotTime)
         {
             Shoot();
         }
@@ -83,15 +132,47 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        body.linearVelocity = moveInput * moveSpeed;
+        // While dashing, the dash overrides the normal movement
+        body.linearVelocity = isDashing ? dashDirection * dashSpeed : moveInput * moveSpeed;
     }
 
-    /// <summary>Called by enemy shots. For now it only plays the hit animation; health comes in Stage 4.</summary>
+    private void StartDash()
+    {
+        // Dash where Aqua is moving; if she stands still, dash towards the aim direction
+        dashDirection = moveInput.sqrMagnitude > 0.01f ? moveInput.normalized : aimDirection;
+        isDashing = true;
+        dashEndTime = Time.time + dashDuration;
+        nextDashTime = Time.time + dashCooldown;   // the cooldown counts from the start of the dash
+        if (health != null)
+        {
+            health.SetInvulnerable(true); // an invulneravility for the dash 
+        }
+    }
+    private void EndDash()
+    {
+        isDashing = false;
+        if (health != null)
+        {
+            health.SetInvulnerable(false);// ends the dash invulneravility
+        }
+    }
+
+
+    /// <summary>Plays the hit animation. Connected to PlayerHealth's On Damage event.</summary>
     public void TakeHit()
     {
         if (animator != null)
         {
             animator.SetTrigger(HitHash);
+        }
+    }
+
+    /// <summary>Plays the Die animation. Connected to PlayerHealth's On Death event.</summary>
+    public void PlayDeathAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger(DieHash);
         }
     }
 
@@ -114,6 +195,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>Turns the weapon guide around Aqua so it points where she is aiming.</summary>
+    private void RotateAimPivot()
+    {
+        if (aimPivot == null)
+        {
+            return;
+        }
+
+        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        aimPivot.rotation = Quaternion.Euler(0f, 0f, angle + aimAngleOffset);
+
+        // Mirror the weapon vertically when aiming left, so it is never drawn upside down
+        aimPivot.localScale = new Vector3(1f, aimDirection.x < 0f ? -1f : 1f, 1f);
+    }
+
     private void Shoot()
     {
         if (projectilePrefab == null)
@@ -123,7 +219,10 @@ public class PlayerController : MonoBehaviour
 
         nextShotTime = Time.time + 1f / shotsPerSecond;
 
-        Vector2 spawnPosition = (Vector2)transform.position + aimDirection * muzzleDistance;
+        // Shots leave from the muzzle (tip of the water gun); without one, from a fixed distance along the aim
+        Vector2 spawnPosition = muzzlePoint != null
+            ? (Vector2)muzzlePoint.position
+            : (Vector2)transform.position + aimDirection * muzzleDistance;
         Projectile shot = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
         shot.Launch(aimDirection);
 
