@@ -49,3 +49,189 @@ HydroRush aims to raise awareness about water pollution through gameplay. By rep
 4. Open the main scene inside the Assets folder.
 5. Press Play in the Unity Editor. 
 
+# AI Usage Declaration – HydroRush
+
+## 1. Introduction
+
+During the development of HydroRush, generative Artificial Intelligence (AI) tools were used as support for programming, code debugging, gameplay mechanics implementation, accessibility features, and visual asset creation.
+
+The purpose of using these tools was to assist the development team in solving programming problems, generating initial code structures, improving existing implementations, and exploring solutions for different gameplay systems.
+
+AI-generated content was reviewed and adapted by the team before being integrated into the project. The final implementation, modifications, testing, and validation were the responsibility of the developers.
+
+## 2. AI Tools and Versions
+
+The following generative AI tools were reported as part of the development process:
+
+|          Tool          |                Version              |                         Main Purpose                       |
+|------------------------|-------------------------------------|------------------------------------------------------------|
+| ChatGPT                |                (GPT-6)              | C# code generation, debugging, and programming assistance. |
+| Claude                 |               Sonnet 5.5            | Code generation, review, and debugging.                    |
+| Image generation tool  |                (GPT-6)              | Creation of the main character's sprite sheet (Aqua).      |
+
+The exact versions and tools used for each task must be confirmed with the corresponding team members.
+
+## 3. AI Usage in Development
+
+AI tools were used to support the development of several systems in HydroRush.
+
+The documented areas include:
+
+- MenuManager: scene transition debugging.
+- EnemySpawn: random enemy spawn position debugging.
+- PlayerController: implementation of the Dash ability.
+- AccessibilitySettings: implementation of an automatic shooting accessibility option.
+- Aqua Sprite Sheet: AI-assisted visual asset creation.
+
+### 3.1. MenuManager – Scene Transition Debugging
+
+**Objective:** Identify and solve an issue where the Play method was not being executed correctly when interacting with a UI button.
+
+**AI-generated prompt:**
+
+"I have a menumanager but is not reading the void play in order to change scene on the editor what shout i change, since the script is already on the button"
+
+**AI assistance:** Debugging and identifying possible problems with the connection between the UI button and the scene transition method.
+
+**Generated code:** To be documented after reviewing the AI response and the final script.
+
+**Manual modifications:** To be confirmed with the developer.
+
+**Functional validation:** To be documented with evidence from Unity.
+
+### 3.2. EnemySpawn – Random Position Debugging
+
+**Objective:** Solve an error related to the use of Random.Range for defining enemy spawn positions.
+
+**AI-generated prompt:**
+
+"On the following script i have an issue with the random.range to define were the enemies should spawn, how should i fixed it and also have the error code Error: 'Random' is an ambiguous reference between 'UnityEngine.Random' and 'System.Random'"
+
+**AI assistance:** Identification of the ambiguous reference between UnityEngine.Random and System.Random and suggestions for correcting the random position generation.
+
+**Generated code:** To be documented after reviewing the AI response and the final script.
+
+**Manual modifications:** To be confirmed with the developer.
+
+**Functional validation:** To be documented with evidence from Unity.
+
+### 3.3. PlayerController – Dash Ability
+
+**Objective:** Implement a dash ability with temporary invulnerability while preserving the existing player movement, aiming, and shooting systems.
+
+**AI-generated prompt:**
+
+"I have a 2D top-down shooter in Unity (new Input System, Rigidbody2D). My PlayerController already handles movement, mouse aiming and shooting, and my PlayerHealth already has SetInvulnerable(bool).
+
+Add a dash with minimal changes:
+1. Input: 'Player/Dash' action (Left Shift, Space, gamepad East) found with InputSystem.actions.FindAction. If missing, LogWarning and disable only the dash.
+2. Serialized fields: dashSpeed, dashDuration, dashCooldown (counted from the start of the dash).
+3. Direction: move input if moving, otherwise the aim direction.
+4. While dashing, the dash velocity overrides normal movement in FixedUpdate.
+5. Invulnerable during the dash through SetInvulnerable(true/false).
+
+If I paste a Console error, explain the cause, give the exact fix, and say whether it comes from my scripts or the Editor."
+
+### 3.4. AccessibilitySettings – Automatic Shooting
+
+**Objective:** Implement an accessibility option that allows the player to activate automatic shooting while preserving manual shooting functionality.
+
+**AI-generated prompt:**
+
+"Add an auto-fire accessibility option with minimal changes:
+1. Static class `AccessibilitySettings`: each option is a property saved with PlayerPrefs (off by default) that raises a C# event when it changes.
+2. MonoBehaviour `AutoFireToggle`: toggles with the F key and supports an optional UI Toggle and TMP status text.
+3. Change the shooting condition in PlayerController so manual shooting still works.
+4. Edge cases: Time.timeScale = 0, UI clicks counting as shots, and resetting the saved PlayerPrefs value."
+
+**AI assistance:** Generation of an initial accessibility system, including saved settings, keyboard interaction, UI integration, and automatic shooting.
+
+### 3.5. Aqua Sprite Sheet – Visual Asset Generation
+
+**Objective:** Use generative AI to support the creation of the main character's visual assets.
+
+**AI tool:** Chat-GPT
+
+**AI-generated asset:** Aqua's sprite sheet.
+
+**Manual modifications:** Adjustments on individual frames, image dimensions, transparency, and animation consistency.
+
+**Functional validation:** The sprite sheet import, animation configuration, and visual appearance inside Unity.
+
+## 4. AI-Generated Code Identification
+
+AI-generated code fragments must be identified in the corresponding C# scripts using the following comment:
+
+```csharp
+// Generated by AI
+```
+Menumanager 
+
+I have a menumanager but is not reading the void  play in order to change scene on the editor what shout i change, since the script is already on the button 
+
+EnemySpawn 
+
+On the following script i have an issue with the random.range to define were the enemies should spawn, how should i fixed it and also have the error code Error: 'Random' is an ambiguous reference between 'UnityEngine.Random' and 'System.Random' 
+
+PlayerController( Dash) 
+
+I have a 2D top-down shooter in Unity (new Input System, Rigidbody2D). My PlayerController already handles movement, mouse aiming and shooting, and my PlayerHealth already has SetInvulnerable(bool). 
+ 
+Add a dash with minimal changes: 
+1. Input: "Player/Dash" action (Left Shift, Space, gamepad East) found with InputSystem.actions.FindAction. If missing, LogWarning and disable only the dash. 
+2. Serialized fields: dashSpeed, dashDuration, dashCooldown (counted from the start of the dash). 
+3. Direction: move input if moving, otherwise the aim direction. 
+4. While dashing, the dash velocity overrides normal movement in FixedUpdate. 
+5. Invulnerable during the dash through SetInvulnerable(true/false) 
+ 
+If I paste a Console error, explain the cause, give the exact fix, and say whether it comes from my scripts or the Editor. 
+
+AccesibilitySettings. 
+
+Add an auto-fire accessibility option with minimal changes: 
+1. Static class `AccessibilitySettings`: each option is a property saved with PlayerPrefs (off by default) that raises a C# event when it changes. 
+2. MonoBehaviour `AutoFireToggle`: toggles with the F key and supports an optional UI Toggle and TMP status text. 
+3. Change the shooting condition in PlayerController so manual shooting still works. 
+4. Edge cases: Time.timeScale = 0, UI clicks counting as shots, and resetting the saved PlayerPrefs value.
+The modifications include:
+
+- Adjustments to variables, references, and component configurations.
+- Integration with existing scripts and gameplay systems.
+- Corrections to programming errors.
+- Adaptation to Unity's Input System.
+- Adjustments to movement, animations, and gameplay interactions.
+- Improvements to accessibility and user interface behavior.
+
+Specific modifications must be documented alongside the corresponding scripts and development evidence.
+
+## 6. Functional Validation and Testing
+
+The proposed AI-generated solutions were intended to be integrated and evaluated within Unity.
+
+The validation record should include:
+
+| System | Test performed | Result | Evidence |
+|---|---|---|---|
+| MenuManager |                    Verify scene transition through the Play button.             | Verified  | 
+| EnemySpawn  |                     Verify random enemy spawn positions.                        | Confirmed | 
+| Dash        |             Verify movement, cooldown, and temporary invulnerability.           | Confirmed |
+| AccessibilitySettings | Verify automatic shooting, manual shooting, and saved settings.       | Confirmed |
+| Aqua Sprite Sheet |            Verify sprite import and animation playback. | To be confirmed | Verified  |
+
+Only tests actually performed by the development team should be reported as successful.
+
+## 7. Team Responsibility
+
+Generative AI was used as a support tool throughout the development process and did not replace the work of the development team.
+
+The team members were responsible for reviewing the generated suggestions, modifying and integrating the code, configuring the Unity project, conducting functional tests, and making final implementation decisions.
+
+The use of GitHub allowed the team to maintain a history of project changes, identify contributions, and organize the development process.
+
+## 8. Conclusion
+
+The use of generative Artificial Intelligence supported the development of HydroRush by providing assistance with programming, debugging, gameplay implementation, accessibility features, and visual asset creation.
+
+The documentation of original prompts, generated code, manual modifications, and functional tests provides transparency regarding the role of AI in the project.
+
+The final implementation and validation of the game remain the responsibility of the development team.
